@@ -67,3 +67,4 @@ The main content is in `src/index.md`.
 - If you see `externally-managed-environment` or permission errors, always use a virtual environment as shown above.
 - If you see `command not found: mkdocs`, make sure you installed dependencies after activating the virtual environment, or use `python -m mkdocs ...`.
 # documentsInvesting
+# documentsInvesting
