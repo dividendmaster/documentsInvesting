@@ -1,0 +1,6 @@
+site_name: Como analisar empresas
+nav:
+  - Home: src/index.md
+docs_dir: src
+site_dir: site
+
