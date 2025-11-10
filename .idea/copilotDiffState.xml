@@ -15,6 +15,7 @@
           <value>
             <PendingDiffInfo>
               <option name="filePath" value="$PROJECT_DIR$/mkdocs.yml" />
+              <option name="originalContent" value="site_name: Como analisar empresas&#10;nav:&#10;  - Home: src/index.md&#10;docs_dir: src&#10;site_dir: site&#10;" />
               <option name="updatedContent" value="site_name: Como analisar empresas&#10;nav:&#10;  - Home: src/index.md&#10;docs_dir: src&#10;site_dir: site&#10;" />
             </PendingDiffInfo>
           </value>
