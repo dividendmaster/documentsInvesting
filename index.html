@@ -337,6 +337,15 @@
             border-radius: 12px;
             padding: 20px;
             position: relative;
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .chart-wrapper canvas {
+            width: 100% !important;
+            max-width: 100%;
+            height: auto !important;
         }
 
         .milestone-msg {
@@ -601,9 +610,16 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: true,
+                    aspectRatio: window.innerWidth < 768 ? 1.2 : 2,
                     plugins: {
                         legend: {
-                            labels: { color: tickColor, font: { family: 'Inter' } }
+                            labels: {
+                                color: tickColor,
+                                font: { family: 'Inter', size: window.innerWidth < 480 ? 10 : 12 },
+                                boxWidth: window.innerWidth < 480 ? 12 : 40,
+                                padding: window.innerWidth < 480 ? 8 : 10
+                            }
                         },
                         tooltip: {
                             callbacks: {
@@ -613,13 +629,26 @@
                     },
                     scales: {
                         x: {
-                            ticks: { color: tickColor, maxTicksLimit: 10 },
+                            ticks: {
+                                color: tickColor,
+                                maxTicksLimit: window.innerWidth < 480 ? 5 : 10,
+                                font: { size: window.innerWidth < 480 ? 9 : 12 }
+                            },
                             grid: { color: gridColor }
                         },
                         y: {
                             ticks: {
                                 color: tickColor,
-                                callback: (v) => formatCurrency(v)
+                                maxTicksLimit: window.innerWidth < 480 ? 5 : 8,
+                                font: { size: window.innerWidth < 480 ? 9 : 12 },
+                                callback: (v) => {
+                                    if (window.innerWidth < 480) {
+                                        if (v >= 1000000) return '€' + (v / 1000000).toFixed(1) + 'M';
+                                        if (v >= 1000) return '€' + (v / 1000).toFixed(0) + 'k';
+                                        return '€' + v;
+                                    }
+                                    return formatCurrency(v);
+                                }
                             },
                             grid: { color: gridColor }
                         }
@@ -632,6 +661,15 @@
 
         // Run calculation on load
         calculate();
+
+        // Recalculate on resize for responsive chart
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (chartInstance) calculate();
+            }, 250);
+        });
     </script>
 </body>
 </html>
